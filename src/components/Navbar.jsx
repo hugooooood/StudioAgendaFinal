@@ -1,39 +1,35 @@
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
   return (
-    <nav style={styles.nav}>
-      <h2 style={styles.logo}>StudioAgenda</h2>
-      <div style={styles.links}>
-        <Link to="/" style={styles.link}>Inicio</Link>
-        <Link to="/login" style={styles.link}>Ingresar</Link>
-        <Link to="/register" style={styles.link}>Registrarse</Link>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <div className="container-fluid">
+        <Link to="/" className="navbar-brand fw-bold fs-4">
+          StudioAgenda
+        </Link>
+        <div className="collapse navbar-collapse justify-content-end">
+          <ul className="navbar-nav gap-3">
+            <li className="nav-item">
+              <Link to="/" className="nav-link text-white">
+                Inicio
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/login" className="nav-link text-white">
+                Ingresar
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/register" className="nav-link text-white">
+                Registrarse
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
-};
-
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "1rem 2rem",
-    backgroundColor: "#111",
-    color: "#fff",
-  },
-  logo: {
-    fontSize: "1.5rem",
-    fontWeight: "bold"
-  },
-  links: {
-    display: "flex",
-    gap: "1rem"
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none"
-  }
 };
 
 export default Navbar;
