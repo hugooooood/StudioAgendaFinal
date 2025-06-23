@@ -1,22 +1,47 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+const multer = require("multer");
+const path = require("path");
 
-// Crear estudio con foto (ya implementado)
-router.post("/studios", async (req, res) => {
-  const { nombre_estudio, componentes, precio_hora, user_id, fotos } = req.body;
+// Configuración de almacenamiento con multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../public/uploads"));
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + file.originalname;
+    cb(null, uniqueSuffix);
+  },
+});
 
+const upload = multer({ storage });
+
+// Crear estudio con fotos usando multipart/form-data
+router.post("/studios", upload.array("images"), async (req, res) => {
   try {
+    console.log("BODY RECIBIDO:", req.body);
+    const { nombre_estudio, componentes, precio_hora, user_id } = req.body;
+
+    if (!nombre_estudio || !componentes || !precio_hora || !user_id) {
+      return res.status(400).json({
+        success: false,
+        message: "Faltan datos requeridos para registrar el estudio.",
+      });
+    }
+
     const result = await pool.query(
       `INSERT INTO estudios (nombre_estudio, componentes, precio_hora, user_id)
-       VALUES ($1, $2, $3, $4) RETURNING *`,
+       VALUES ($1, $2, $3, $4)
+       RETURNING *`,
       [nombre_estudio, componentes, precio_hora, user_id]
     );
 
     const estudio = result.rows[0];
 
-    if (fotos && fotos.length > 0) {
-      for (const url of fotos) {
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const url = `/uploads/${file.filename}`;
         await pool.query(
           `INSERT INTO fotos_estudio (estudio_id, url) VALUES ($1, $2)`,
           [estudio.id, url]

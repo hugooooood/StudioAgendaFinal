@@ -39,4 +39,25 @@ router.post("/reservas", async (req, res) => {
   }
 });
 
+// GET: Obtener reservas por ID de artista
+router.get("/reservas/usuario/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT r.*, e.nombre_estudio, e.precio_hora
+       FROM reservas r
+       JOIN estudios e ON r.estudio_id = e.id
+       WHERE r.artista_id = $1
+       ORDER BY r.fecha, r.hora`,
+      [id]
+    );
+
+    res.json({ success: true, reservas: result.rows });
+  } catch (error) {
+    console.error("❌ Error al obtener reservas del usuario:", error);
+    res.status(500).json({ success: false, message: "Error del servidor." });
+  }
+});
+
 module.exports = router;
