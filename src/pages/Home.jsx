@@ -7,7 +7,7 @@ import studio3 from "../assets/estudio3.jpg";
 const Home = () => {
   return (
     <>
-      <Navbar />
+      
       <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
         <Carousel
           controls={false}

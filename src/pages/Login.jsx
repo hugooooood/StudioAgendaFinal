@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      
       <main style={styles.main}>
         <div style={styles.card}>
           <h2 style={styles.title}>Iniciar Sesión</h2>

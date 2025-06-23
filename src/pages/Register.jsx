@@ -42,7 +42,7 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
+      
       <Container fluid className="vh-100 d-flex align-items-center justify-content-center bg-light">
         <Card className="shadow-lg border-0 w-100" style={{ maxWidth: "1000px" }}>
           <Row className="g-0">

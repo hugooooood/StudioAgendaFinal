@@ -5,7 +5,6 @@ require('dotenv').config();
 
 const pool = require('./db');
 
-// Verifica conexión
 pool.query('SELECT current_database()', (err, res) => {
   if (err) {
     console.error('❌ Error al conectar con la base de datos:', err);
@@ -16,7 +15,6 @@ pool.query('SELECT current_database()', (err, res) => {
 
 const app = express();
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,19 +22,19 @@ app.use(express.urlencoded({ extended: true }));
 // Servir imágenes
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-// Importar rutas
+// Rutas
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user.routes');
-const studioRoutes = require('./models/studio.routes'); // ❗ Se mantiene como lo tenías tú
-const availabilityRoutes = require('./routes/availability.routes'); // ✅ NUEVA ruta agregada
+const availabilityRoutes = require('./routes/availability.routes');
+const studioRoutes = require('./routes/studio.routes');
+const reservaRoutes = require('./routes/reservas.routes'); // ✅ nueva
 
-// Usar rutas
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api', availabilityRoutes);
 app.use('/api', studioRoutes);
-app.use('/api', availabilityRoutes); // ✅ activada correctamente
+app.use('/api', reservaRoutes); // ✅ nueva
 
-// Servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);

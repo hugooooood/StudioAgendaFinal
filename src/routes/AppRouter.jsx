@@ -1,34 +1,28 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
-import Register from "../pages/Register";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Profile from "../pages/Profile";
-import ArtistProfile from "../pages/ArtistProfile";
 import ProducerProfile from "../pages/ProducerProfile";
-import StudioLoged from "../pages/StudioLoged"; // ✅ Importar StudioLoged
+import ArtistProfile from "../pages/ArtistProfile";
+import StudioLoged from "../pages/StudioLoged";
+import ReservarEstudio from "../pages/ReservarEstudio";
+import Navbar from "../components/Navbar";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Página de inicio */}
-        <Route path="/" element={<Home />} />
-
-        {/* Página de login */}
-        <Route path="/login" element={<Login />} />
-
-        {/* Página de registro */}
-        <Route path="/register" element={<Register />} />
-
-        {/* Perfil general */}
+        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/login" element={<><Navbar /><Login /></>} />
+        <Route path="/register" element={<><Navbar /><Register /></>} />
         <Route path="/profile" element={<Profile />} />
-
-        {/* Perfiles específicos */}
-        <Route path="/artist-profile" element={<ArtistProfile />} />
         <Route path="/producer-profile" element={<ProducerProfile />} />
-
-        {/* ✅ Nueva ruta añadida para redirección post-registro */}
+        <Route path="/artist-profile" element={<ArtistProfile />} />
         <Route path="/studio-loged" element={<StudioLoged />} />
+        <Route path="/estudios" element={<ReservarEstudio />} />
+        <Route path="/reservar/:id" element={<ReservarEstudio />} />
       </Routes>
     </BrowserRouter>
   );
