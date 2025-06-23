@@ -27,12 +27,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // Importar rutas
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user.routes');
-const studioRoutes = require('./models/studio.routes'); // 👈 CORREGIDO según tu estructura
+const studioRoutes = require('./models/studio.routes'); // ❗ Se mantiene como lo tenías tú
+const availabilityRoutes = require('./routes/availability.routes'); // ✅ NUEVA ruta agregada
 
 // Usar rutas
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', studioRoutes);
+app.use('/api', availabilityRoutes); // ✅ activada correctamente
 
 // Servidor
 const PORT = process.env.PORT || 4000;
