@@ -62,7 +62,7 @@ const ProducerProfile = () => {
   return (
     <>
       <header style={styles.header}>
-        <div style={styles.logo}>StudioAgenda</div>
+        <div style={styles.logo}>🎵StudioAgenda</div>
         <div>
           <button style={styles.button} onClick={() => navigate("/")}>
             Inicio

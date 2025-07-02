@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand fw-bold fs-4">
-          StudioAgenda
+          🎵 StudioAgenda 
         </Link>
         <div className="collapse navbar-collapse justify-content-end">
           <ul className="navbar-nav gap-3">

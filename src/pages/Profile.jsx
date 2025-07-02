@@ -88,7 +88,7 @@ const Profile = () => {
   return (
     <>
       <header style={styles.header}>
-        <div style={styles.logo}>StudioAgenda</div>
+        <div style={styles.logo}>🎵StudioAgenda</div>
         <div>
           <button onClick={() => navigate("/artist-profile")} style={styles.navButton}>
             Perfil Artista

@@ -9,6 +9,9 @@ import ArtistProfile from "../pages/ArtistProfile";
 import StudioLoged from "../pages/StudioLoged";
 import ReservarEstudio from "../pages/ReservarEstudio";
 import Navbar from "../components/Navbar";
+import ReservaExitosa from "../pages/ReservaExitosa";
+import PagoSimulado from "../pages/PagoSimulado";
+
 
 const AppRouter = () => {
   return (
@@ -23,6 +26,8 @@ const AppRouter = () => {
         <Route path="/studio-loged" element={<StudioLoged />} />
         <Route path="/estudios" element={<ReservarEstudio />} />
         <Route path="/reservar/:id" element={<ReservarEstudio />} />
+        <Route path="/reserva-exitosa" element={<ReservaExitosa />} />
+        <Route path="/pago" element={<PagoSimulado />} />
       </Routes>
     </BrowserRouter>
   );

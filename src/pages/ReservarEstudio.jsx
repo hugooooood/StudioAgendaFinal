@@ -18,35 +18,23 @@ const ReservarEstudio = () => {
       });
   }, []);
 
-  const handleReservar = async (estudioId, disponibilidad) => {
-    try {
-      const res = await fetch("http://localhost:4000/api/reservas", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          estudio_id: estudioId,
-          artista_id: storedUser.id,
-          fecha: disponibilidad.fecha,
-          hora: disponibilidad.hora,
-        }),
-      });
+  const handleReservar = (estudioId, disponibilidad) => {
+    const estudio = estudios.find((e) => e.id === estudioId);
 
-      const data = await res.json();
-      if (data.success) {
-        alert("Reserva realizada con éxito.");
-        setReservas((prev) => [...prev, data.reserva]);
-      } else {
-        alert("Error al reservar: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error al reservar:", error);
-      alert("Ocurrió un error.");
-    }
+    const reservaConEstudio = {
+      estudio_id: estudioId,
+      artista_id: storedUser.id,
+      fecha: disponibilidad.fecha,
+      hora: disponibilidad.hora,
+      nombre_estudio: estudio?.nombre_estudio,
+      precio: estudio?.precio_hora,
+    };
+
+    navigate("/pago", { state: { reserva: reservaConEstudio } });
   };
 
   return (
     <div style={styles.container}>
-      {/* Header personalizado */}
       <header style={styles.header}>
         <div style={styles.logo}>StudioAgenda 🎧</div>
         <div>
