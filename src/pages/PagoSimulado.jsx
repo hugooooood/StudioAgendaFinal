@@ -26,6 +26,7 @@ const PagoSimulado = () => {
           state: {
             reserva: {
               nombre_estudio: reserva.nombre_estudio,
+              direccion: reserva.direccion,
               fecha: reserva.fecha,
               hora: reserva.hora,
               precio: reserva.precio,
@@ -39,6 +40,7 @@ const PagoSimulado = () => {
     } catch (err) {
       console.error("Error al confirmar pago:", err);
       alert("Error al confirmar pago.");
+      navigate("/estudios");
     }
   };
 
@@ -60,6 +62,7 @@ const PagoSimulado = () => {
       <div style={styles.card}>
         <h2>Simulación de pago</h2>
         <p><strong>Estudio:</strong> {reserva.nombre_estudio}</p>
+        <p><strong>Dirección:</strong> {reserva.direccion}</p>
         <p><strong>Precio:</strong> ${reserva.precio}</p>
         <p><strong>Fecha:</strong> {reserva.fecha}</p>
         <p><strong>Hora:</strong> {reserva.hora}</p>

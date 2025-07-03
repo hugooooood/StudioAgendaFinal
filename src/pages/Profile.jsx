@@ -93,12 +93,11 @@ const Profile = () => {
           <button onClick={() => navigate("/artist-profile")} style={styles.navButton}>
             Perfil Artista
           </button>
-          <button onClick={() => navigate("/producer-profile")} style={styles.navButton}>
-            Perfil Productor
-          </button>
-          <button onClick={() => navigate("/")} style={styles.homeButton}>
-            Inicio
-          </button>
+          {!hasStudio && (
+            <button onClick={() => navigate("/producer-profile")} style={styles.navButton}>
+              Crear Estudio
+            </button>
+          )}
           {hasStudio && (
             <button onClick={() => navigate("/studio-loged")} style={styles.studioButton}>
               Mi Estudio
@@ -117,15 +116,13 @@ const Profile = () => {
                 formData.file
                   ? URL.createObjectURL(formData.file)
                   : formData.image
-                    ? `http://localhost:4000${formData.image}`
-                    : "https://via.placeholder.com/150"
+                  ? `http://localhost:4000${formData.image}`
+                  : "https://via.placeholder.com/150"
               }
               alt="Foto de perfil"
               style={{ width: "150px", height: "150px", borderRadius: "50%", objectFit: "cover" }}
             />
-            {editing && (
-              <input type="file" accept="image/*" onChange={handleFileChange} />
-            )}
+            {editing && <input type="file" accept="image/*" onChange={handleFileChange} />}
           </div>
 
           <label>Nombre:</label>
@@ -155,8 +152,12 @@ const Profile = () => {
 
           {editing ? (
             <div style={styles.buttonGroup}>
-              <button onClick={handleSave} style={styles.saveButton}>Guardar</button>
-              <button onClick={handleCancel} style={styles.cancelButton}>Cancelar</button>
+              <button onClick={handleSave} style={styles.saveButton}>
+                Guardar
+              </button>
+              <button onClick={handleCancel} style={styles.cancelButton}>
+                Cancelar
+              </button>
             </div>
           ) : (
             <button onClick={() => setEditing(true)} style={styles.editButton}>
@@ -180,7 +181,7 @@ const styles = {
     alignItems: "center",
     padding: "1rem 2rem",
     backgroundColor: "#1a1a1a",
-    color: "#fff"
+    color: "#fff",
   },
   logo: { fontSize: "1.5rem", fontWeight: "bold" },
   homeButton: {
@@ -199,7 +200,7 @@ const styles = {
     padding: "0.5rem 1rem",
     borderRadius: "5px",
     cursor: "pointer",
-    marginRight: "0.5rem"
+    marginRight: "0.5rem",
   },
   studioButton: {
     backgroundColor: "#17a2b8",
@@ -208,7 +209,7 @@ const styles = {
     padding: "0.5rem 1rem",
     borderRadius: "5px",
     cursor: "pointer",
-    marginLeft: "0.5rem"
+    marginLeft: "0.5rem",
   },
   main: {
     minHeight: "100vh",

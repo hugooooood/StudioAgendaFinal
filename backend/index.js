@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const pool = require('./db');
 
+// Verificar conexión a la base de datos
 pool.query('SELECT current_database()', (err, res) => {
   if (err) {
     console.error('❌ Error al conectar con la base de datos:', err);
@@ -15,25 +16,25 @@ pool.query('SELECT current_database()', (err, res) => {
 
 const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Servir imágenes
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-// Rutas
+// Importar rutas
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user.routes');
 const availabilityRoutes = require('./routes/availability.routes');
 const studioRoutes = require('./routes/studio.routes');
-const reservaRoutes = require('./routes/reservas.routes'); // ✅ nueva
+const reservaRoutes = require('./routes/reservas.routes');
 
+// Montar rutas con prefijo /api
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', availabilityRoutes);
-app.use('/api', studioRoutes);
-app.use('/api', reservaRoutes); // ✅ nueva
+app.use('/api', studioRoutes);      // ✅ Esto arregla el problema
+app.use('/api/reservas', reservaRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
