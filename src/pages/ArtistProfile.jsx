@@ -20,6 +20,23 @@ const ArtistProfile = () => {
     fetchReservas();
   }, [storedUser.id]);
 
+  const cancelarReserva = async (id) => {
+    const confirmar = window.confirm("¿Estás seguro de que deseas cancelar esta reserva?");
+    if (!confirmar) return;
+
+    try {
+      const res = await fetch(`http://localhost:4000/api/reservas/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReservas(prev => prev.filter(r => r.id !== id));
+      }
+    } catch (err) {
+      console.error("Error al cancelar la reserva:", err);
+    }
+  };
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -73,13 +90,19 @@ const ArtistProfile = () => {
             {reservas.length === 0 ? (
               <p style={{ opacity: 0.7 }}>No tienes reservas activas aún.</p>
             ) : (
-              reservas.map((reserva, index) => (
-                <div key={index} style={styles.reservaItem}>
+              reservas.map((reserva) => (
+                <div key={reserva.id} style={styles.reservaItem}>
                   <p><strong>Estudio:</strong> {reserva.estudio?.nombre_estudio}</p>
-                  <p><strong>Dirección:</strong> {reserva.estudio?.direccion}</p>
+                  <p><strong>Dirección:</strong> {reserva.estudio?.direccion || "No disponible"}</p>
                   <p><strong>Fecha:</strong> {reserva.fecha}</p>
                   <p><strong>Hora:</strong> {reserva.hora}</p>
                   <p><strong>Estado:</strong> {reserva.estado}</p>
+                  <button
+                    onClick={() => cancelarReserva(reserva.id)}
+                    style={styles.cancelButton}
+                  >
+                    Cancelar Reserva
+                  </button>
                 </div>
               ))
             )}
@@ -194,6 +217,16 @@ const styles = {
     fontSize: "0.95rem",
     color: "#000",
     textAlign: "left",
+  },
+  cancelButton: {
+    backgroundColor: "#dc3545",
+    color: "#fff",
+    border: "none",
+    padding: "0.4rem 0.8rem",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "0.5rem",
+    fontWeight: "bold",
   },
 };
 
