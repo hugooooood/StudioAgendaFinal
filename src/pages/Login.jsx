@@ -71,7 +71,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "linear-gradient(to right, #f0f2f5, #d9e4f5)",
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
     padding: "1rem"
   },
   card: {
@@ -79,7 +79,7 @@ const styles = {
     padding: "2rem",
     borderRadius: "12px",
     boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-    maxWidth: "400px",
+    maxWidth: "800px",
     width: "100%"
   },
   title: {

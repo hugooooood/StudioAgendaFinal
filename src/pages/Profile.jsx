@@ -86,20 +86,20 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <div style={styles.page}>
       <header style={styles.header}>
-        <div style={styles.logo}>🎵StudioAgenda</div>
+        <div style={styles.logo}>StudioAgenda 🎵</div>
         <div>
-          <button onClick={() => navigate("/artist-profile")} style={styles.navButton}>
+          <button style={styles.button} onClick={() => navigate("/artist-profile")}>
             Perfil Artista
           </button>
           {!hasStudio && (
-            <button onClick={() => navigate("/producer-profile")} style={styles.navButton}>
+            <button style={styles.button} onClick={() => navigate("/producer-profile")}>
               Crear Estudio
             </button>
           )}
           {hasStudio && (
-            <button onClick={() => navigate("/studio-loged")} style={styles.studioButton}>
+            <button style={styles.button} onClick={() => navigate("/studio-loged")}>
               Mi Estudio
             </button>
           )}
@@ -108,9 +108,9 @@ const Profile = () => {
 
       <main style={styles.main}>
         <div style={styles.card}>
-          <h2>Perfil del Usuario</h2>
+          <h2 style={styles.title}>Perfil del Usuario</h2>
 
-          <div style={{ textAlign: "center" }}>
+          <div style={styles.imageWrapper}>
             <img
               src={
                 formData.file
@@ -120,12 +120,12 @@ const Profile = () => {
                   : "https://via.placeholder.com/150"
               }
               alt="Foto de perfil"
-              style={{ width: "150px", height: "150px", borderRadius: "50%", objectFit: "cover" }}
+              style={styles.image}
             />
             {editing && <input type="file" accept="image/*" onChange={handleFileChange} />}
           </div>
 
-          <label>Nombre:</label>
+          <label style={styles.label}>Nombre:</label>
           {editing ? (
             <input
               type="text"
@@ -138,7 +138,7 @@ const Profile = () => {
             <p>{user.name}</p>
           )}
 
-          <label>Biografía:</label>
+          <label style={styles.label}>Biografía:</label>
           {editing ? (
             <textarea
               name="bio"
@@ -170,122 +170,131 @@ const Profile = () => {
           </button>
         </div>
       </main>
-    </>
+    </div>
   );
 };
 
 const styles = {
+  page: {
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+    minHeight: "100vh",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    color: "#000",
+  },
   header: {
+    backgroundColor: "#111",
+    color: "#fff",
+    padding: "1rem 2rem",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "1rem 2rem",
-    backgroundColor: "#1a1a1a",
-    color: "#fff",
+    borderBottom: "2px solid #444",
   },
-  logo: { fontSize: "1.5rem", fontWeight: "bold" },
-  homeButton: {
+  logo: {
+    fontSize: "1.6rem",
+    fontWeight: "bold",
+  },
+  button: {
     backgroundColor: "#007bff",
-    border: "none",
     color: "#fff",
+    border: "none",
     padding: "0.5rem 1rem",
     borderRadius: "5px",
-    cursor: "pointer",
     marginLeft: "0.5rem",
-  },
-  navButton: {
-    backgroundColor: "#6c757d",
-    border: "none",
-    color: "#fff",
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
     cursor: "pointer",
-    marginRight: "0.5rem",
-  },
-  studioButton: {
-    backgroundColor: "#17a2b8",
-    border: "none",
-    color: "#fff",
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginLeft: "0.5rem",
   },
   main: {
-    minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    background: "#f0f2f5",
+    padding: "2rem",
   },
   card: {
     backgroundColor: "#fff",
     padding: "2rem",
-    borderRadius: "10px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    maxWidth: "500px",
+    borderRadius: "15px",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
     width: "100%",
+    maxWidth: "500px",
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: "1.5rem",
+    fontSize: "1.8rem",
+    fontWeight: "bold",
+  },
+  imageWrapper: {
+    textAlign: "center",
+    marginBottom: "1rem",
+  },
+  image: {
+    width: "150px",
+    height: "150px",
+    borderRadius: "50%",
+    objectFit: "cover",
+    marginBottom: "0.5rem",
+  },
+  label: {
+    fontWeight: "bold",
+    marginTop: "1rem",
+    display: "block",
   },
   input: {
     width: "100%",
     padding: "0.6rem",
-    marginBottom: "1rem",
-    borderRadius: "6px",
+    borderRadius: "8px",
     border: "1px solid #ccc",
+    marginTop: "0.3rem",
   },
   textarea: {
     width: "100%",
     padding: "0.6rem",
-    height: "100px",
-    marginBottom: "1rem",
-    borderRadius: "6px",
+    borderRadius: "8px",
     border: "1px solid #ccc",
-  },
-  editButton: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    padding: "0.8rem",
-    border: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    width: "100%",
-    cursor: "pointer",
-    marginBottom: "1rem",
-  },
-  saveButton: {
-    backgroundColor: "#28a745",
-    color: "#fff",
-    padding: "0.8rem",
-    border: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    width: "48%",
-    cursor: "pointer",
-  },
-  cancelButton: {
-    backgroundColor: "#ffc107",
-    color: "#fff",
-    padding: "0.8rem",
-    border: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    width: "48%",
-    cursor: "pointer",
+    marginTop: "0.3rem",
   },
   buttonGroup: {
     display: "flex",
     justifyContent: "space-between",
+    marginTop: "1.5rem",
     gap: "1rem",
-    marginBottom: "1rem",
+  },
+  saveButton: {
+    flex: 1,
+    backgroundColor: "#28a745",
+    color: "#fff",
+    padding: "0.8rem",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: "#ffc107",
+    color: "#fff",
+    padding: "0.8rem",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
+  editButton: {
+    width: "100%",
+    backgroundColor: "#17a2b8",
+    color: "#fff",
+    padding: "0.8rem",
+    border: "none",
+    borderRadius: "8px",
+    marginTop: "1.5rem",
+    cursor: "pointer",
   },
   logoutButton: {
+    width: "100%",
     backgroundColor: "#dc3545",
     color: "#fff",
     padding: "0.8rem",
     border: "none",
-    borderRadius: "6px",
+    borderRadius: "8px",
+    marginTop: "1rem",
     fontWeight: "bold",
-    width: "100%",
     cursor: "pointer",
   },
 };

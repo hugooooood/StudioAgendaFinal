@@ -14,7 +14,6 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // Validar que exista disponibilidad
     const disponibilidad = await pool.query(
       `SELECT * FROM disponibilidades WHERE estudio_id = $1 AND fecha = $2 AND hora = $3`,
       [estudio_id, fecha, hora]
@@ -27,7 +26,6 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Insertar reserva
     const result = await pool.query(
       `INSERT INTO reservas (estudio_id, artista_id, fecha, hora, estado)
        VALUES ($1, $2, $3, $4, 'confirmada')
@@ -35,7 +33,6 @@ router.post("/", async (req, res) => {
       [estudio_id, artista_id, fecha, hora]
     );
 
-    // Eliminar disponibilidad tomada
     await pool.query(
       `DELETE FROM disponibilidades WHERE estudio_id = $1 AND fecha = $2 AND hora = $3`,
       [estudio_id, fecha, hora]
@@ -102,5 +99,62 @@ router.get("/por-artista/:id", async (req, res) => {
     res.status(500).json({ success: false, message: "Error al obtener reservas del artista" });
   }
 });
+
+// GET: Obtener reservas hechas a los estudios de un productor
+router.get("/productor/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT r.*, u.name AS nombre_artista, e.nombre_estudio 
+       FROM reservas r
+       JOIN users u ON r.artista_id = u.id
+       JOIN estudios e ON r.estudio_id = e.id
+       WHERE e.user_id = $1
+       ORDER BY r.fecha, r.hora`,
+      [user_id]
+    );
+
+    res.json({ success: true, reservas: result.rows });
+  } catch (err) {
+    console.error("❌ Error al obtener reservas del productor:", err);
+    res.status(500).json({ success: false, message: "Error en el servidor" });
+  }
+});
+
+// GET: Obtener reservas hechas al estudio de un productor específico
+router.get("/por-productor/:id", async (req, res) => {
+  const productorId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      `SELECT r.*, u.name AS nombre_artista
+       FROM reservas r
+       JOIN estudios e ON r.estudio_id = e.id
+       JOIN users u ON r.artista_id = u.id
+       WHERE e.user_id = $1
+       ORDER BY r.fecha DESC, r.hora ASC`,
+      [productorId]
+    );
+
+    res.json({ success: true, reservas: result.rows });
+  } catch (error) {
+    console.error("❌ Error al obtener reservas del productor:", error.message);
+    res.status(500).json({ success: false, message: "Error al obtener reservas del productor" });
+  }
+});
+
+// DELETE: Cancelar una reserva por ID
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query("DELETE FROM reservas WHERE id = $1", [id]);
+    res.json({ success: true, message: "Reserva cancelada correctamente." });
+  } catch (error) {
+    console.error("❌ Error al cancelar reserva:", error.message);
+    res.status(500).json({ success: false, message: "Error al cancelar reserva." });
+  }
+});
+
 
 module.exports = router;

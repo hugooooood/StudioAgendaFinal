@@ -41,14 +41,10 @@ const ProducerProfile = () => {
 
       if (data.success) {
         alert("🎉 Estudio registrado correctamente");
-
-        // Limpieza del formulario
         setNombreEstudio("");
         setComponents("");
         setPricePerHour("");
         setImages([]);
-
-        // ✅ Redirigir a StudioLoged.jsx
         navigate("/studio-loged");
       } else {
         alert("⚠️ Error al registrar el estudio: " + data.message);
@@ -64,69 +60,64 @@ const ProducerProfile = () => {
       <header style={styles.header}>
         <div style={styles.logo}>🎵StudioAgenda</div>
         <div>
-          <button style={styles.button} onClick={() => navigate("/")}>
-            Inicio
-          </button>
-          <button style={styles.button} onClick={() => navigate("/profile")}>
+          <button style={styles.navButton} onClick={() => navigate("/profile")}>
             Volver al Perfil
           </button>
         </div>
       </header>
 
-      <main style={styles.main}>
-        <form style={styles.form} onSubmit={handleSubmit}>
-          <h2 style={{ marginBottom: "1rem" }}>Registrar Estudio</h2>
-
-          <label>Nombre del Estudio:</label>
-          <input
-            type="text"
-            value={nombreEstudio}
-            onChange={(e) => setNombreEstudio(e.target.value)}
-            style={styles.input}
-            placeholder="Ej: Estudio Underground"
-            required
-          />
-
-          <label>Fotos del estudio :</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-          />
-          <div style={styles.preview}>
-            {images.map((img, i) => (
-              <img
-                key={i}
-                src={URL.createObjectURL(img)}
-                alt={`preview-${i}`}
-                style={styles.image}
+      <div style={styles.background}>
+        <div style={styles.container}>
+          <div style={styles.card}>
+            <h2 style={styles.title}>Registrar Estudio</h2>
+            <form onSubmit={handleSubmit}>
+              <label style={styles.label}>Nombre del Estudio:</label>
+              <input
+                type="text"
+                value={nombreEstudio}
+                onChange={(e) => setNombreEstudio(e.target.value)}
+                style={styles.input}
+                placeholder="Ej: Estudio Underground"
+                required
               />
-            ))}
+
+              <label style={styles.label}>Fotos del estudio:</label>
+              <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+              <div style={styles.preview}>
+                {images.map((img, i) => (
+                  <img
+                    key={i}
+                    src={URL.createObjectURL(img)}
+                    alt={`preview-${i}`}
+                    style={styles.image}
+                  />
+                ))}
+              </div>
+
+              <label style={styles.label}>Componentes del estudio:</label>
+              <textarea
+                style={styles.input}
+                value={components}
+                onChange={(e) => setComponents(e.target.value)}
+                placeholder="Micrófonos, interfaz de audio, monitores, etc."
+              />
+
+              <label style={styles.label}>Precio por hora (CLP):</label>
+              <input
+                type="number"
+                style={styles.input}
+                value={pricePerHour}
+                onChange={(e) => setPricePerHour(e.target.value)}
+                placeholder="Ej: 15000"
+              />
+
+              <button type="submit" style={styles.submitButton}>
+                Guardar Estudio
+              </button>
+            </form>
           </div>
-
-          <label>Componentes del estudio:</label>
-          <textarea
-            style={styles.input}
-            value={components}
-            onChange={(e) => setComponents(e.target.value)}
-            placeholder="Ej: Micrófonos, interfaz de audio, monitores, etc."
-          />
-
-          <label>Precio por hora (CLP):</label>
-          <input
-            type="number"
-            style={styles.input}
-            value={pricePerHour}
-            onChange={(e) => setPricePerHour(e.target.value)}
-            placeholder="Ej: 15000"
-          />
-
-          <button type="submit" style={styles.submitButton}>
-            Guardar Estudio
-          </button>
-        </form>
-      </main>
+        </div>
+      </div>
     </>
   );
 };
@@ -141,50 +132,63 @@ const styles = {
     color: "#fff",
   },
   logo: { fontSize: "1.5rem", fontWeight: "bold" },
-  button: {
-    backgroundColor: "#007bff",
+  navButton: {
+    backgroundColor: "#6c757d",
+    border: "none",
     color: "#fff",
     padding: "0.5rem 1rem",
-    border: "none",
-    borderRadius: "5px",
-    marginLeft: "10px",
+    borderRadius: "6px",
     cursor: "pointer",
+    marginRight: "0.5rem",
   },
-  main: {
+  background: {
+    background: "url('./src/assets/studio-bg.jpg') center/cover no-repeat",
     minHeight: "100vh",
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    background: "#f0f2f5",
-    padding: "2rem",
+    justifyContent: "center",
   },
-  form: {
-    backgroundColor: "#fff",
+  container: {
     padding: "2rem",
-    borderRadius: "10px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
     width: "100%",
-    maxWidth: "500px",
+    maxWidth: "600px",
+  },
+  card: {
+    backgroundColor: "#ffffffee",
+    borderRadius: "16px",
+    padding: "2rem",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+  },
+  title: {
+    fontSize: "1.8rem",
+    fontWeight: "bold",
+    marginBottom: "1rem",
+    textAlign: "center",
+  },
+  label: {
+    fontWeight: "bold",
+    marginTop: "1rem",
+    display: "block",
   },
   input: {
     width: "100%",
-    padding: "0.6rem",
-    marginBottom: "1rem",
-    borderRadius: "6px",
+    padding: "0.5rem",
+    borderRadius: "8px",
     border: "1px solid #ccc",
-    fontSize: "1rem",
+    marginTop: "0.3rem",
+  },
+  preview: {
+    display: "flex",
+    gap: "10px",
+    marginTop: "0.5rem",
+    marginBottom: "1rem",
   },
   image: {
     width: "100px",
     height: "100px",
     objectFit: "cover",
     borderRadius: "8px",
-    marginRight: "10px",
-  },
-  preview: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "1rem",
+    border: "1px solid #ddd",
   },
   submitButton: {
     backgroundColor: "#28a745",
@@ -192,9 +196,11 @@ const styles = {
     padding: "0.8rem",
     width: "100%",
     border: "none",
-    borderRadius: "6px",
+    borderRadius: "8px",
     fontWeight: "bold",
     cursor: "pointer",
+    marginTop: "1rem",
+    transition: "background-color 0.3s ease",
   },
 };
 

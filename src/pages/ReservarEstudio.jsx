@@ -41,19 +41,7 @@ const ReservarEstudio = () => {
           <button style={styles.button} onClick={() => navigate("/artist-profile")}>
             Volver al Perfil
           </button>
-          <button
-            style={styles.button}
-            onClick={() => {
-              if (reservas.length === 0) {
-                alert("No tienes reservas registradas.");
-              } else {
-                console.table(reservas);
-                alert("Reservas cargadas en consola.");
-              }
-            }}
-          >
-            Ver Reservas
-          </button>
+          
         </div>
       </header>
 
@@ -86,7 +74,7 @@ const ReservarEstudio = () => {
                 </div>
               ))
             ) : (
-              <p style={{ fontStyle: "italic" }}>Sin horas disponibles</p>
+              <p style={styles.sinDisponibles}>Sin horas disponibles</p>
             )}
           </div>
         ))}
@@ -97,23 +85,27 @@ const ReservarEstudio = () => {
 
 const styles = {
   container: {
-    padding: "1rem 2rem",
-    background: "#f8f9fa",
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
     minHeight: "100vh",
+    padding: "2rem",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    color: "#fff",
   },
   header: {
-    backgroundColor: "#111",
-    color: "#fff",
-    padding: "1rem 2rem",
     display: "flex",
     justifyContent: "space-between",
+    padding: "1rem 2rem",
+    backgroundColor: "#111",
+    color: "#fff",
     alignItems: "center",
+    borderBottom: "2px solid #333",
+    borderRadius: "8px",
     marginBottom: "2rem",
-    borderRadius: "5px",
   },
   logo: {
     fontWeight: "bold",
-    fontSize: "1.3rem",
+    fontSize: "1.5rem",
+    letterSpacing: "1px",
   },
   button: {
     backgroundColor: "#007bff",
@@ -123,41 +115,60 @@ const styles = {
     borderRadius: "5px",
     marginLeft: "0.5rem",
     cursor: "pointer",
+    transition: "all 0.3s ease-in-out",
   },
   title: {
     textAlign: "center",
+    fontSize: "2rem",
     marginBottom: "1.5rem",
-    fontSize: "1.8rem",
+    fontWeight: "bold",
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "1.5rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: "2rem",
   },
   card: {
-    background: "#fff",
-    borderRadius: "8px",
-    padding: "1rem",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    backgroundColor: "#fff",
+    color: "#000",
+    borderRadius: "15px",
+    padding: "1.5rem",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
   },
   image: {
     width: "100%",
-    height: "150px",
+    height: "180px",
     objectFit: "cover",
-    borderRadius: "6px",
+    borderRadius: "10px",
+    marginBottom: "1rem",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+  },
+  name: {
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    marginBottom: "0.3rem",
+  },
+  componentes: {
+    fontStyle: "italic",
+    color: "#555",
+    marginBottom: "0.5rem",
+  },
+  precio: {
+    fontWeight: "bold",
     marginBottom: "1rem",
   },
-  name: { margin: 0 },
-  componentes: { fontStyle: "italic", color: "#555" },
-  precio: { fontWeight: "bold", marginTop: "0.5rem" },
   subtitulo: {
-    marginTop: "1rem",
     fontWeight: "bold",
     borderTop: "1px solid #ddd",
     paddingTop: "0.5rem",
+    marginBottom: "0.5rem",
   },
   dispBox: {
-    marginTop: "0.5rem",
+    backgroundColor: "#f0f0f0",
+    color: "#000",
+    borderRadius: "10px",
+    padding: "0.5rem 1rem",
+    marginBottom: "0.5rem",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -166,9 +177,14 @@ const styles = {
     backgroundColor: "#28a745",
     color: "#fff",
     border: "none",
-    padding: "0.3rem 0.7rem",
+    padding: "0.3rem 0.8rem",
     borderRadius: "5px",
     cursor: "pointer",
+    fontWeight: "bold",
+  },
+  sinDisponibles: {
+    fontStyle: "italic",
+    color: "#ccc",
   },
 };
 

@@ -53,7 +53,7 @@ const ArtistProfile = () => {
 
         <div style={styles.cardContainer}>
           {/* Tarjeta de Perfil */}
-          <div style={styles.profileCard}>
+          <div style={styles.sharedCard}>
             <img
               src={
                 storedUser?.image
@@ -68,7 +68,7 @@ const ArtistProfile = () => {
           </div>
 
           {/* Tarjeta de Reservas */}
-          <div style={styles.reservasCard}>
+          <div style={styles.sharedCard}>
             <h3 style={{ marginBottom: "1rem" }}>Mis Reservas</h3>
             {reservas.length === 0 ? (
               <p style={{ opacity: 0.7 }}>No tienes reservas activas aún.</p>
@@ -153,35 +153,24 @@ const styles = {
   },
   cardContainer: {
     display: "flex",
-    flexWrap: "wrap",
+    flexDirection: "column",
+    alignItems: "center",
     gap: "2rem",
-    justifyContent: "center",
     width: "100%",
   },
-  profileCard: {
+  sharedCard: {
     backgroundColor: "#ffffff",
     color: "#000",
     borderRadius: "15px",
     padding: "2rem",
-    width: "320px",
+    width: "500px",
     boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
     textAlign: "center",
-  },
-  reservasCard: {
-    backgroundColor: "#ffffff",
-    color: "#000",
-    borderRadius: "15px",
-    padding: "2rem",
-    width: "380px",
-    maxHeight: "500px",
-    overflowY: "auto",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-    textAlign: "left",
+    maxHeight: "none",
   },
   profileImage: {
-    width: "130px",
-    height: "130px",
+    width: "250px",
+    height: "250px",
     borderRadius: "50%",
     objectFit: "cover",
     marginBottom: "1rem",
@@ -204,8 +193,8 @@ const styles = {
     marginBottom: "1rem",
     fontSize: "0.95rem",
     color: "#000",
+    textAlign: "left",
   },
 };
 
 export default ArtistProfile;
-  
